@@ -1,0 +1,10 @@
+apiVersion: mygroup.example.com/v1
+kind: MyResource
+metadata:
+  name: example
+spec:
+  branch: "new-feature-branch-3"
+  file_path: "new_file_3.txt"
+  file_content: "This is the content of the new file."
+  pr_title: "Add new feature"
+  pr_body: "This PR adds a new feature."
