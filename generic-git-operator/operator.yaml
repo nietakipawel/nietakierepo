@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: operator
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: operator
+  template:
+    metadata:
+      labels:
+        app: operator
+    spec:
+      serviceAccountName: operator
+      containers:
+        - name: operator
+          image: nietakipawel/generic-git-operator:latest
+          imagePullPolicy: Always
+          command: ["kopf", "run", "/app/operator.py"]
+          env:
+            - name: GIT_PYTHON_REFRESH
+              value: "quiet"
+            - name: SSH_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: git-ssh-secret
+                  key: ssh-privatekey

@@ -1,0 +1,11 @@
+apiVersion: mygroup.example.com/v1
+kind: MyResource
+metadata:
+  name: example
+spec:
+  repo_url: 'git@ssh.dev.azure.com:v3/CloudSpotpl/IaC/test'
+  branch_name: 'new-feature-branch'
+  commit_message: 'Add new feature'
+  code_to_add: |
+    # New feature code
+    print("Hello, world!")
