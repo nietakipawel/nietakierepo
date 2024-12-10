@@ -2,22 +2,40 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "subscriptionId": {
+      "type": "string",
+      "metadata": {
+        "description": "The subscription ID where the disk is located."
+      }
+    },
+    "resourceGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the resource group containing the disk."
+      }
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "The location of the disk."
+      }
+    },
     "diskName": {
       "type": "string",
       "metadata": {
-        "description": "Name of the disk to update tags."
+        "description": "The name of the disk to update."
       }
-    }
+    },
     "newTags": {
       "type": "object",
       "metadata": {
-        "description": "Tags to add or update."
+        "description": "The new tags to add or update."
       }
     }
   },
   "variables": {
-    "diskId": "[resourceId('Microsoft.Compute/disks', parameters('diskName'))]",
-    "existingTags": "[if(not(empty(reference(variables('diskId')).tags)), reference(variables('diskId')).tags, {})]",
+    "diskId": "[subscriptionResourceId(parameters('subscriptionId'), 'Microsoft.Compute/disks', parameters('diskName'))]",
+    "existingTags": "[if(not(empty(reference(variables('diskId'), '2023-10-02').tags)), reference(variables('diskId'), '2023-10-02').tags, {})]",
     "mergedTags": "[union(variables('existingTags'), parameters('newTags'))]"
   },
   "resources": [
@@ -25,6 +43,7 @@
       "type": "Microsoft.Compute/disks",
       "apiVersion": "2023-10-02",
       "name": "[parameters('diskName')]",
+      "location": "[parameters('location')]",
       "tags": "[variables('mergedTags')]",
       "properties": {}
     }
