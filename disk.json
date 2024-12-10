@@ -8,7 +8,7 @@
         "description": "The subscription ID where the disk is located."
       }
     },
-    "resourceGroupName": {
+    "resourceGroup": {
       "type": "string",
       "metadata": {
         "description": "The name of the resource group containing the disk."
@@ -34,7 +34,6 @@
     }
   },
   "variables": {
-    "diskId": "[subscriptionResourceId(parameters('subscriptionId'), 'Microsoft.Compute/disks', parameters('diskName'))]",
     "existingTags": "[if(not(empty(reference(variables('diskId'), '2023-10-02').tags)), reference(variables('diskId'), '2023-10-02').tags, {})]",
     "mergedTags": "[union(variables('existingTags'), parameters('newTags'))]"
   },
