@@ -7,13 +7,7 @@
       "metadata": {
         "description": "Name of the disk to update tags."
       }
-    },
-    "resourceGroupName": {
-      "type": "string",
-      "metadata": {
-        "description": "Resource group of the disk."
-      }
-    },
+    }
     "newTags": {
       "type": "object",
       "metadata": {
@@ -31,7 +25,6 @@
       "type": "Microsoft.Compute/disks",
       "apiVersion": "2023-10-02",
       "name": "[parameters('diskName')]",
-      "location": "[resourceGroup().location]",
       "tags": "[variables('mergedTags')]",
       "properties": {}
     }
